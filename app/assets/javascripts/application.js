@@ -65,18 +65,12 @@ function getData(){
     filtered = data.filter((strike)=> {
       let $h3 = $('<h3>')
 
-      if($('#country').val() !== ''){
+      if ($('#dropdown').val()){
         $('.resultHeader').text('Search Results')
-        return strike.country == $('#country').val()
-      } else if ($('#location').val() !== ''){
-        $('.resultHeader').text('Search Results')
-        return strike.location == $('#location').val()
-      } else if ($('#date').val() !== ''){
-        $('.resultHeader').text('Search Results')
-        return strike.date.replace('T00:00:00.000Z', '') == $('#date').val()
+        return strike.country == $('#dropdown').val()
       } else {
         $('.resultHeader').text('Showing All Reports')
-        return strike
+        return strike;
       }
     })
 
@@ -162,7 +156,7 @@ function deleteStrike(){
 // $(document).on('turbolinks:load', function() {
   // clear search results for each click, get data
   $(()=> {
-    $('#submit').click(()=> {
+    $('#dropdown').change(()=> {
       $('#results').empty()
                    .append($('<h4>')
                    .addClass('resultHeader'))

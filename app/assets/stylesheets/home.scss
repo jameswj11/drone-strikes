@@ -1,0 +1,96 @@
+// Place all the styles related to the Home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+body {
+  text-align: center;
+  font-family: Helvetica, sans-serif;
+  background-color: white;
+  font-family: Verdana;
+  line-height: 14pt;
+}
+
+.header {
+  padding-top: 30px;
+}
+
+div.columns {
+  width: 40vw;
+}
+
+div#results {
+  // margin-top: 20px;
+}
+
+div#saved {
+  // margin-top: 20px;
+}
+
+button#submit {
+  color: black;
+}
+
+button#savedSearches {
+  color: black;
+}
+
+button.delete {
+  color: black;
+  margin-top: 10px;
+}
+
+button.save {
+  color: black;
+  margin-top: 10px;
+}
+
+.resultHeader {
+  text-align: center;
+}
+
+.savedHeader {
+  text-align: center;
+}
+
+#saved {
+  margin-top: 10px;
+}
+
+a:link {
+  color: olive;
+}
+
+h1 {
+  color: olive;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  padding-bottom: 0;
+}
+
+strong {
+  color: olive;
+}
+
+h3 {
+  color: olive;
+}
+
+h4 {
+  color: black;
+}
+
+ul {
+  color: black;
+}
+
+li {
+  color: black;
+}
+
+p {
+  color: black;
+}
+
+ul {
+  text-align: left;
+  margin: 30px;
+}

@@ -99,6 +99,7 @@ function addStrike(){
   }
 
   $.post('/save', data).done(function(response){
+    getSavedStrikes()
   })
 }
 

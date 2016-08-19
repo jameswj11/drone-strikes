@@ -15,7 +15,6 @@
 //= require_tree .
 
 function renderStrikes(strike){
-
   var $card       = $('<ul>')
   var $location   = $('<li>')
   var $names      = $('<li>').text('People killed: Unknown')

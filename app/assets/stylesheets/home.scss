@@ -21,12 +21,29 @@ div.columns {
   width: 40vw;
 }
 
+div.search {
+  height: 50px;
+}
+
+div#left_div {
+  width: 460px;
+  height: 500px;
+}
+
+div#right_div {
+  width: 460px;
+  height: 1px;
+}
+
 div#results {
-  background-color: rgba(255,255,255,0.8)
+  background-color: rgba(255,255,255,0.8);
+  width: 460px;
 }
 
 div#saved {
-  background-color: rgba(255,255,255,0.8)
+  visibility: hidden;
+  background-color: rgba(255,255,255,0.8);
+  padding-bottom: 5px;
 }
 
 button#submit {
@@ -35,29 +52,45 @@ button#submit {
 
 button#savedSearches {
   color: black;
+  padding: 0;
+  margin-bottom: 0px;
+  width: 120px;
   background-color: white;
 }
 
 button.delete {
   color: black;
+  width: 70px;
+  height: 35px;
+  padding: 0px;
   margin-top: 10px;
 }
 
 button.save {
   color: black;
+  width: 50px;
+  height: 35px;
+  padding: 0px;
+  padding-bottom: 5px;
   margin-top: 10px;
 }
 
 .resultHeader {
   text-align: center;
+  margin-bottom: 0px;
 }
 
 .savedHeader {
   text-align: center;
+  margin-bottom: 0px;
 }
 
-#saved {
-  margin-top: 10px;
+.date {
+  margin-bottom: 0px;
+}
+
+.report {
+  margin-bottom: 0px
 }
 
 a:link {
@@ -75,12 +108,18 @@ strong {
   color: olive;
 }
 
-h3 {
+h5 {
   color: olive;
+  margin-bottom: 0px;
+}
+
+h5#loading {
+  color: black;
 }
 
 h4 {
   color: black;
+  margin-bottom: 0px;
 }
 
 ul {
@@ -89,13 +128,19 @@ ul {
 
 li {
   color: black;
+  margin-bottom: 230px;
 }
 
 p {
   color: black;
+  margin-bottom: 0px;
 }
 
 ul {
   text-align: left;
   margin: 30px;
+}
+
+img#loadingGIF {
+  max-width: 200px;
 }

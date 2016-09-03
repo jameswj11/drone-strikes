@@ -21,10 +21,14 @@ function renderStrikes(strike){
   var $summary    = $('<li>').text(strike.narrative)
   var $deaths     = $('<li>').text(strike.deaths + ' Deaths')
   var $civilians  = $('<li>').text(strike.civilians + ' civilians killed')
-  var $link       = $('<p>').append($('<a target="_BLANK">')
+  var $report       = $('<p>').append($('<a target="_BLANK">')
                             .attr('href', strike.bij_link)
                             .text(strike.bij_link))
-  var $date       = strike.date.replace('T00:00:00.000Z', '')
+                            .addClass('report')
+
+  var $date       = $('<h5>').append(strike.date.replace('T00:00:00.000Z', ''))
+                             .addClass('date')
+
   var $saveButton = $('<button>').addClass('save').text('SAVE')
 
   // conditionals for rendering below
@@ -51,7 +55,10 @@ function renderStrikes(strike){
     $civilians.css('color', 'red')
   }
 
-  $($card).append($('<h3>').append($date)).append($location, $summary, $deaths, $civilians, $names, $link, $saveButton)
+  $($card).append($date)
+          .append(
+            $location, $summary, $deaths, $civilians, $names, $report, $saveButton
+          )
 
   $('#results').append($card)
   $saveButton.click(addStrike)
@@ -60,9 +67,11 @@ function renderStrikes(strike){
 
 function getData(){
   $.get('/strikes').done(function(data){
+    //clear loading gif
+    $('#loading').remove()
+
     // filter through data for search
     var filtered = data.filter(function(strike){
-      var $h3 = $('<h3>')
 
       if ($('#dropdown').val()){
         $('.resultHeader').text('Search Results')
@@ -111,15 +120,21 @@ function getSavedStrikes(){
   $.get('/save').done(function(data){
 
     data.forEach(function(strike){
-      var $date      = $('<h3>').append(strike.date).val(strike.id)
+      var $date      = $('<h5>').append(strike.date)
+                                .val(strike.id)
+                                .addClass('date')
+
       var $location  = $('<li>').text(strike.location)
       var $narrative = $('<li>').text(strike.narrative)
       var $deaths    = $('<li>').text(strike.deaths)
       var $civilians = $('<li>').text(strike.civilians)
       var $names     = $('<li>').text(strike.names)
+
       var $report    = $('<p>').append($('<a target="_BLANK">')
-                                .attr('href', strike.report)
-                                .text(strike.report))
+                               .attr('href', strike.report)
+                               .text(strike.report))
+                               .addClass('report')
+
       var $delete    = $('<button>').addClass('delete').text('DELETE')
 
       // check to see if civilians were killed
@@ -154,6 +169,10 @@ function deleteStrike(){
 
 $(function(){
   $('#dropdown').change(function(){
+    $('.container').prepend(($('<h5>')
+                      .text('Loading Results...')
+                      .attr('id', 'loading')))
+
     $('#results').empty()
                  .append($('<h4>')
                  .addClass('resultHeader'))
@@ -162,6 +181,7 @@ $(function(){
   })
 
   $('#savedSearches').click(function(){
+    $('#saved').css('visibility', 'visible')
     getSavedStrikes()
   })
 })

@@ -115,7 +115,8 @@ function addStrike(){
 
 function getSavedStrikes(){
   $('#saved').empty()
-             .append($('<h4>').text('Saved Reports'))
+             .append($('<h4>').addClass('savedHeader')
+                              .text('Saved Reports'))
 
   $.get('/save').done(function(data){
 

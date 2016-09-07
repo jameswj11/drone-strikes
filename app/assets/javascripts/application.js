@@ -15,30 +15,28 @@
 //= require_tree .
 
 function renderStrikes(strike){
-  var $card       = $('<ul>')
-  var $location   = $('<li>')
-  var $names      = $('<li>').text('People killed: Unknown')
-  var $summary    = $('<li>').text(strike.narrative)
-  var $deaths     = $('<li>').text(strike.deaths + ' Deaths')
-  var $civilians  = $('<li>').text(strike.civilians + ' civilians killed')
-  var $report       = $('<p>').append($('<a target="_BLANK">')
+  let $card       = $('<ul>')
+  let $location   = $('<li>')
+  let $names      = $('<li>').text('People killed: Unknown')
+  let $summary    = $('<li>').text(strike.narrative)
+  let $deaths     = $('<li>').text(strike.deaths + ' Deaths')
+  let $civilians  = $('<li>').text(strike.civilians + ' civilians killed')
+
+  let $report     = $('<p>').append($('<a target="_BLANK">')
                             .attr('href', strike.bij_link)
                             .text(strike.bij_link))
                             .addClass('report')
 
-  var $date       = $('<h5>').append(strike.date.replace('T00:00:00.000Z', ''))
+  let $date       = $('<h5>').append(strike.date.replace('T00:00:00.000Z', ''))
                              .addClass('date')
 
-  var $saveButton = $('<button>').addClass('save').text('SAVE')
+  let $saveButton = $('<button>').addClass('save').text('SAVE')
 
   // conditionals for rendering below
   // check to see if there's a town included in location data
   if (strike.town !== ''){
     $location.text(
-      strike.town +
-      ', ' + strike.location +
-      ', ' + strike.country
-    )
+      strike.town + ', ' + strike.location + ', ' + strike.country)
   } else {
     $location.text(strike.location + ', ' + strike.country)
   }
@@ -57,21 +55,27 @@ function renderStrikes(strike){
 
   $($card).append($date)
           .append(
-            $location, $summary, $deaths, $civilians, $names, $report, $saveButton
-          )
+            $location,
+            $summary,
+            $deaths,
+            $civilians,
+            $names,
+            $report,
+            $saveButton)
 
   $('#results').append($card)
+
   $saveButton.click(addStrike)
 }
 
 
 function getData(){
-  $.get('/strikes').done(function(data){
+  $.get('/strikes').done((data)=>{
     //clear loading gif
     $('#loading').remove()
 
     // filter through data for search
-    var filtered = data.filter(function(strike){
+    let filtered = data.filter((strike)=>{
 
       if ($('#dropdown').val()){
         $('.resultHeader').text('Search Results')
@@ -86,7 +90,7 @@ function getData(){
     if(filtered.length === 0){
       $('#results').append('<h4>').text('NO RESULTS')
     } else {
-      filtered.forEach(function(filtered){
+      filtered.forEach((filtered)=>{
         renderStrikes(filtered)
       })
     }
@@ -95,19 +99,19 @@ function getData(){
 
 
 function addStrike(){
-  var $siblings = $(this).siblings()
+  let $siblings = $(this).siblings()
 
-  var data = {
-    date: $siblings.eq(0).text(),
-    location: $siblings.eq(1).text(),
+  let data = {
+    date:      $siblings.eq(0).text(),
+    location:  $siblings.eq(1).text(),
     narrative: $siblings.eq(2).text(),
-    deaths: $siblings.eq(3).text(),
+    deaths:    $siblings.eq(3).text(),
     civilians: $siblings.eq(4).text(),
-    names: $siblings.eq(5).text(),
-    report: $siblings.eq(6).text()
+    names:     $siblings.eq(5).text(),
+    report:    $siblings.eq(6).text()
   }
 
-  $.post('/save', data).done(function(response){
+  $.post('/save', data).done((response)=>{
     getSavedStrikes()
   })
 }
@@ -118,25 +122,25 @@ function getSavedStrikes(){
              .append($('<h4>').addClass('savedHeader')
                               .text('Saved Reports'))
 
-  $.get('/save').done(function(data){
-
-    data.forEach(function(strike){
-      var $date      = $('<h5>').append(strike.date)
+  $.get('/save').done((data)=>{
+    data.forEach((strike)=>{
+      let $date      = $('<h5>').append(strike.date)
                                 .val(strike.id)
                                 .addClass('date')
 
-      var $location  = $('<li>').text(strike.location)
-      var $narrative = $('<li>').text(strike.narrative)
-      var $deaths    = $('<li>').text(strike.deaths)
-      var $civilians = $('<li>').text(strike.civilians)
-      var $names     = $('<li>').text(strike.names)
+      let $location  = $('<li>').text(strike.location)
+      let $narrative = $('<li>').text(strike.narrative)
+      let $deaths    = $('<li>').text(strike.deaths)
+      let $civilians = $('<li>').text(strike.civilians)
+      let $names     = $('<li>').text(strike.names)
 
-      var $report    = $('<p>').append($('<a target="_BLANK">')
+      let $report    = $('<p>').append($('<a target="_BLANK">')
                                .attr('href', strike.report)
                                .text(strike.report))
                                .addClass('report')
 
-      var $delete    = $('<button>').addClass('delete').text('DELETE')
+      let $delete    = $('<button>').addClass('delete')
+                                    .text('DELETE')
 
       // check to see if civilians were killed
       if (strike.civilians === '' || strike.civilians === '0'){
@@ -145,7 +149,15 @@ function getSavedStrikes(){
         $civilians.css('color', 'red')
       }
 
-      var $oneResult = $('<ul>').append($date, $location, $narrative, $deaths, $civilians, $names, $report, $delete)
+      let $oneResult = $('<ul>').append(
+                                        $date,
+                                        $location,
+                                        $narrative,
+                                        $deaths,
+                                        $civilians,
+                                        $names,
+                                        $report,
+                                        $delete)
 
       $('#saved').append($oneResult)
 
@@ -156,23 +168,26 @@ function getSavedStrikes(){
 
 
 function deleteStrike(){
-  var $currentList = $(this).parent()
-  var id           = Number.parseInt($(this).siblings().eq(0).val())
+  let $currentList = $(this).parent()
+  let id           = Number.parseInt($(this)
+                                      .siblings()
+                                      .eq(0)
+                                      .val())
 
   $.ajax({
     url: '/save/' + id,
     method: 'delete'
-  }).done(function(){
+  }).done(()=>{
     $currentList.empty()
   })
 }
 
 
 $(function(){
-  $('#dropdown').change(function(){
+  $('#dropdown').change(()=>{
     $('.container').prepend(($('<h5>')
-                      .text('Loading Results...')
-                      .attr('id', 'loading')))
+                   .text('Loading Results...')
+                   .attr('id', 'loading')))
 
     $('#results').empty()
                  .append($('<h4>')
@@ -181,7 +196,7 @@ $(function(){
     getData()
   })
 
-  $('#savedSearches').click(function(){
+  $('#savedSearches').click(()=>{
     $('#saved').css('visibility', 'visible')
     getSavedStrikes()
   })
